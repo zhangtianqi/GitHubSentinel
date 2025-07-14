@@ -50,8 +50,8 @@ def generate_hn_hour_topic(model_type, model_name):
 
 # 定义一个回调函数，用于根据 Radio 组件的选择返回不同的 Dropdown 选项
 def update_model_list(model_type):
-    if model_type == "openai":
-        return gr.Dropdown(choices=["gpt-4o", "gpt-4o-mini", "gpt-3.5-turbo"], label="选择模型")
+    if model_type == "deepseek":
+        return gr.Dropdown(choices=["deepseek-chat", "deepseek-reasoner"], label="选择模型")
     elif model_type == "ollama":
         return gr.Dropdown(choices=["llama3.1", "gemma2:2b", "qwen2:7b"], label="选择模型")
 
@@ -63,16 +63,16 @@ with gr.Blocks(title="GitHubSentinel") as demo:
         gr.Markdown("## GitHub 项目进展")  # 添加小标题
 
         # 创建 Radio 组件
-        model_type = gr.Radio(["openai", "ollama"], label="模型类型", info="使用 OpenAI GPT API 或 Ollama 私有化模型服务")
+        model_type = gr.Radio(["deepseek"], label="模型类型", info="使用 Deepseek")
 
         # 创建 Dropdown 组件
-        model_name = gr.Dropdown(choices=["gpt-4o", "gpt-4o-mini", "gpt-3.5-turbo"], label="选择模型")
+        model_name = gr.Dropdown(choices=["deepseek-chat", "deepseek-reasoner"], label="选择模型")
 
         # 创建订阅列表的 Dropdown 组件
         subscription_list = gr.Dropdown(subscription_manager.list_subscriptions(), label="订阅列表", info="已订阅GitHub项目")
 
         # 创建 Slider 组件
-        days = gr.Slider(value=2, minimum=1, maximum=7, step=1, label="报告周期", info="生成项目过去一段时间进展，单位：天")
+        days = gr.Slider(value=3, minimum=1, maximum=30, step=1, label="报告周期", info="生成项目过去一段时间进展，单位：天")
 
         # 使用 radio 组件的值来更新 dropdown 组件的选项
         model_type.change(fn=update_model_list, inputs=model_type, outputs=model_name)
@@ -92,10 +92,10 @@ with gr.Blocks(title="GitHubSentinel") as demo:
         gr.Markdown("## Hacker News 热点话题")  # 添加小标题
 
         # 创建 Radio 组件
-        model_type = gr.Radio(["openai", "ollama"], label="模型类型", info="使用 OpenAI GPT API 或 Ollama 私有化模型服务")
+        model_type = gr.Radio(["deepseek"], label="模型类型", info="使用 Deepseek 模型服务")
 
         # 创建 Dropdown 组件
-        model_name = gr.Dropdown(choices=["gpt-4o", "gpt-4o-mini", "gpt-3.5-turbo"], label="选择模型")
+        model_name = gr.Dropdown(choices=["deepseek-chat", "deepseek-reasoner"], label="选择模型")
 
         # 使用 radio 组件的值来更新 dropdown 组件的选项
         model_type.change(fn=update_model_list, inputs=model_type, outputs=model_name)
@@ -113,6 +113,6 @@ with gr.Blocks(title="GitHubSentinel") as demo:
 
 
 if __name__ == "__main__":
-    demo.launch(share=True, server_name="0.0.0.0")  # 启动界面并设置为公共可访问
+    demo.launch(share=False, server_name="0.0.0.0")  # 启动界面并设置为公共可访问
     # 可选带有用户认证的启动方式
     # demo.launch(share=True, server_name="0.0.0.0", auth=("django", "1234"))
