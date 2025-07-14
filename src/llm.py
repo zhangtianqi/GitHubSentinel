@@ -13,7 +13,7 @@ class LLM:
         self.config = config
         self.model = config.llm_model_type.lower()  # 获取模型类型并转换为小写
         if self.model == "openai":
-            self.client = OpenAI()  # 创建OpenAI客户端实例
+            self.client = OpenAI(api_key="***", base_url="https://api.deepseek.com/v1")  # 创建OpenAI客户端实例
         elif self.model == "ollama":
             self.api_url = config.ollama_api_url  # 设置Ollama API的URL
         else:
@@ -109,6 +109,6 @@ if __name__ == '__main__':
 """
 
     # 示例：生成 GitHub 报告
-    system_prompt = "Your specific system prompt for GitHub report generation"
+    system_prompt = "Your specific system prompt for GitHub report generation。报告输出请用简洁的中文进行总结"
     github_report = llm.generate_report(system_prompt, markdown_content)
     LOG.debug(github_report)

@@ -13,8 +13,8 @@
         "to": "test@zaijidata.com"
     },
     "llm": {
-        "model_type": "ollama",
-        "openai_model_name": "gpt-4o-mini",
+        "model_type": "openai",
+        "openai_model_name": "deepseek-chat",
         "ollama_model_name": "llama3.1",
         "ollama_api_url": "http://localhost:11434/api/chat"
     },
